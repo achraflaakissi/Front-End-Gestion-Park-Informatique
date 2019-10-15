@@ -1,0 +1,142 @@
+<div class="row" *ngIf="TestAdd">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+      <blockquote class="blockquote blockquote-success">
+          <footer class="blockquote-footer">
+              Operation effectué avec success !!
+          </footer>
+        </blockquote>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 d-flex align-items-stretch grid-margin">
+    <div class="row flex-grow">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Mouvement Par Unite :</h4>
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="Unite" >Unite</label>
+                  <select *ngIf="UniteList" (change)="OnchangeUnite()" class="form-control" id="Unite" placeholder="Unite ..." [(ngModel)]="MouvementList.unite">
+                    <option value="">--</option>
+                    <option  *ngFor="let item of UniteList" >
+                      {{item}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="Unite" >Date</label>
+                  <input type="date" (change)="OnchangeUnite()" class="form-control" id="Date" placeholder="Date ..." [(ngModel)]="MouvementList.date_mouvement" />
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="Type">Type</label>
+                  <select class="form-control" id="Type" placeholder="Type ..." [(ngModel)]="MouvementList.type">
+                    <option value="">--</option>
+                    <option value="emplacement">Emplacement</option>
+                    <option value="stock">Stock</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="MouvementList.type=='stock'" >
+                <div class="form-group">
+                  <label for="Stock">Stock</label>
+                  <select *ngIf="StockList" class="form-control" id="Stock" placeholder="Stock ..." [(ngModel)]="MouvementList.stock">
+                    <option value="">--</option>
+                    <option  *ngFor="let item of StockList._embedded.stocks"  value="{{item._links.stock.href}}">
+                      {{item.nom}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="MouvementList.type=='emplacement'">
+                <div class="form-group">
+                  <label for="Serial">Emplacement</label>
+                  <select *ngIf="EmplacementList" class="form-control" id="Emplacement" placeholder="Emplacement ..." [(ngModel)]="MouvementList.emplacement">
+                    <option value="">--</option>
+                    <option  *ngFor="let item of EmplacementList._embedded.emplacements" value="{{item._links.emplacement.href}}" >
+                      {{item.nom}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="MouvementList.type=='emplacement'">
+                <div class="form-group">
+                  <label for="Stock">Personnel</label>
+                  <select *ngIf="PersonnelList" class="form-control" id="Stock" placeholder="Stock ..." [(ngModel)]="MouvementList.personnel">
+                    <option value="">--</option>
+                    <option  *ngFor="let item of PersonnelList._embedded.personnels"  value="{{item._links.personnel.href}}">
+                      {{item.fullname}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button type="submit" (click)="onSubmit()" class="btn btn-success mr-2">Valider</button>
+                <button class="btn btn-light">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Liste des articles :</h4>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>
+                Nom
+              </th>
+              <th>
+                Mark
+              </th>
+              <th>
+                Modele
+              </th>
+              <th>
+                Nun Serial
+              </th>
+              <th>
+                Designation
+              </th>
+              <th>
+                Type
+              </th>
+              <th>
+                Unite
+              </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="Articles">
+            <tr *ngFor="let article of Articles._embedded.articles">
+              <td>{{article.nom}}</td>
+              <td>{{article.mark}}</td>
+              <td>{{article.modele}}</td>
+              <td>{{article.sn}}</td>
+              <td>{{article.designation}}</td>
+              <td>{{article.type}}</td>
+              <td>{{article.unite}}</td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="!Articles">
+            <tr>
+              <td class="text-center" colspan="8"><img style="width: 250px !important;height: 250px !important;" src="assets/images/loading.gif" ></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

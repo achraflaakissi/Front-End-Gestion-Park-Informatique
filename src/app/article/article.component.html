@@ -1,0 +1,149 @@
+<div class="row">
+  <div class="col-md-12 d-flex align-items-stretch grid-margin">
+    <div class="row flex-grow">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Chercher Un Article :</h4>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Nom">Nom :</label>
+                  <input type="text" [(ngModel)]="articleSearch.nom" class="form-control" id="Nom" placeholder="Nom ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Mark">Mark</label>
+                  <input type="text" [(ngModel)]="articleSearch.mark" class="form-control" id="Mark" placeholder="Mark ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Modele">Modele</label>
+                  <input type="text" [(ngModel)]="articleSearch.modele" class="form-control" id="Modele" placeholder="Modele ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Serial">Nun Serial</label>
+                  <input type="text" [(ngModel)]="articleSearch.sn" class="form-control" id="Serial" placeholder="Nun Serial ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Unite">Unite</label>
+                  <input type="text" [(ngModel)]="articleSearch.unite" class="form-control" id="Unite" placeholder="Unite ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Type">Type</label>
+                  <input type="text" [(ngModel)]="articleSearch.type" class="form-control" id="Type" placeholder="Type ...">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button type="submit" (click)="onSubmit()" class="btn btn-success mr-2">Filtrer</button>
+                <button (click)="onCancel()" class="btn btn-light">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-9"><h4 class="card-title">Liste des articles :</h4></div>
+          <div class="col-md-3 text-right" *ngIf="nbrline" >
+            N° Lignes Afficher : 
+              <select (change)="changerAffichage()" [(ngModel)]="nbrline" style="display:online">
+                <option>10</option>
+                <option>50</option>
+                <option>100</option>
+                <option>1000</option>
+              </select>
+          </div>
+        </div>
+        
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>
+                Nom
+              </th>
+              <th>
+                Mark
+              </th>
+              <th>
+                Modele
+              </th>
+              <th>
+                Nun Serial
+              </th>
+              <th>
+                Designation
+              </th>
+              <th>
+                Type
+              </th>
+              <th>
+                Unite
+              </th>
+              <th>#</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="Articles">
+            <tr *ngFor="let article of Articles._embedded.articles">
+              <td>{{article.nom}}</td>
+              <td>{{article.mark}}</td>
+              <td>{{article.modele}}</td>
+              <td>{{article.sn}}</td>
+              <td>{{article.designation}}</td>
+              <td>{{article.type}}</td>
+              <td>{{article.unite}}</td>
+              <td>
+                  <button type="button" (click)="OnDetail(article._links.article.href,article._links.mouvements.href)"  class="btn btn-primary btn-sm">Detail</button>
+                  <button type="button" (click)="onEdit(article._links.article.href)"  class="btn btn-dark btn-sm">Modifier</button>
+                  <button type="button" (click)="DeleteArticle(article._links.article.href)"  class="btn btn-danger btn-sm">Supprimer</button>
+              </td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="!Articles">
+            <tr>
+              <td class="text-center" colspan="8"><img style="width: 250px !important;height: 250px !important;" src="assets/images/loading.gif" ></td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="row" *ngIf="Articles" >
+            <div class="col-md-8">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                      <li class="page-item" [ngClass]="{'disabled' : Articles.page.number==0}">
+                        <span class="page-link" (click)="changerAffichagePage(Articles.page.number)">Previous</span>
+                      </li>
+                      <li class="page-item" [ngClass]="{'active' : item-1==Articles.page.number}" *ngFor="let item of createRange(Articles.page.totalPages)">
+                          <span class="page-link" *ngIf="item-1==Articles.page.number" >
+                              {{item}}
+                              <span class="sr-only">(current)</span>
+                          </span>
+                          <a *ngIf="item-1!=Articles.page.number"  class="page-link" (click)="changerAffichagePage(item)" >{{item}}</a>
+                        </li>
+                      <li class="page-item" [ngClass]="{'disabled' : Articles.page.number+1==Articles.page.totalPages}">
+                        <a class="page-link" (click)="changerAffichagePage(Articles.page.number+2)">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+            </div>
+            <div class="col-md-4 text-right" *ngIf="Articles" >
+              Nombre totale des Lignes : {{Articles.page.totalElements}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

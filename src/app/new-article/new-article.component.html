@@ -1,0 +1,224 @@
+<div class="row" *ngIf="Articles">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+      <blockquote class="blockquote blockquote-success">
+          <footer class="blockquote-footer">
+              Operation effectué avec success !!
+          </footer>
+        </blockquote>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 d-flex align-items-stretch grid-margin">
+    <div class="row flex-grow">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"><span *ngIf="this.LinkartEdit" >Modifier</span><span *ngIf="!this.LinkartEdit" >Ajouter</span> Un Article :</h4>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Nom">Nom :</label>
+                  <input type="text" [(ngModel)]="articleSearch.nom" class="form-control" id="Nom" placeholder="Nom ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Mark">Mark</label>
+                  <input type="text" [(ngModel)]="articleSearch.mark" class="form-control" id="Mark" placeholder="Mark ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Modele">Modele</label>
+                  <input type="text" [(ngModel)]="articleSearch.modele" class="form-control" id="Modele" placeholder="Modele ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Serial">Nun Serial</label>
+                  <input type="text" [(ngModel)]="articleSearch.sn" class="form-control" id="Serial" placeholder="Nun Serial ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Type">Type</label>
+                  <input type="text" [(ngModel)]="articleSearch.type" class="form-control" id="Type" placeholder="Type ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Type">Unite</label>
+                  <input type="text" [(ngModel)]="articleSearch.unite" class="form-control" id="Unite" placeholder="Unite ...">
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="showdetail==1">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Designation">Designation :</label>
+                  <input type="text" [(ngModel)]="articleSearch.designation" class="form-control" id="Designation" placeholder="Nom ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Designation">Materiel Donner :</label>
+                  <select [(ngModel)]="articleSearch.materialdonner" class="form-control" id="materialdonner">
+                    <option value="false">--</option>
+                    <option value="false">Non</option>
+                    <option value="true">Oui</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">ip :</label>
+                  <input type="text" [(ngModel)]="articleSearch.ip" class="form-control" id="ip" placeholder="ip ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="cpu">cpu :</label>
+                  <input type="text" [(ngModel)]="articleSearch.cpu" class="form-control" id="cpu" placeholder="cpu ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="ram">ram :</label>
+                  <input type="text" [(ngModel)]="articleSearch.ram" class="form-control" id="ram" placeholder="ram ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="hdd">hdd :</label>
+                  <input type="text" [(ngModel)]="articleSearch.hdd" class="form-control" id="hdd" placeholder="hdd ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">pouce :</label>
+                  <input type="text" [(ngModel)]="articleSearch.pouce" class="form-control" id="pouce" placeholder="pouce ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="port">port :</label>
+                  <input type="text" [(ngModel)]="articleSearch.port" class="form-control" id="port" placeholder="port ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="lumens">lumens :</label>
+                  <input type="text" [(ngModel)]="articleSearch.lumens" class="form-control" id="lumens" placeholder="lumens ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">length :</label>
+                  <input type="text" [(ngModel)]="articleSearch.length" class="form-control" id="length" placeholder="length ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="date_mise_service">date_mise_service :</label>
+                  <input type="date" [(ngModel)]="articleSearch.date_mise_service" class="form-control" id="date_mise_service" placeholder="date_mise_service ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">sessionlogin :</label>
+                  <input type="text" [(ngModel)]="articleSearch.sessionlogin" class="form-control" id="sessionlogin" placeholder="sessionlogin ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">sessionpassword :</label>
+                  <input type="text" [(ngModel)]="articleSearch.sessionpassword" class="form-control" id="sessionpassword" placeholder="sessionpassword ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">antivirus :</label>
+                  <input type="text" [(ngModel)]="articleSearch.antivirus" class="form-control" id="antivirus" placeholder="antivirus ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">antiviruslicence :</label>
+                  <input type="text" [(ngModel)]="articleSearch.antiviruslicence" class="form-control" id="antiviruslicence" placeholder="antiviruslicence ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">anydesk :</label>
+                  <input type="text" [(ngModel)]="articleSearch.anydesk" class="form-control" id="anydesk" placeholder="anydesk ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">anydeskid :</label>
+                  <input type="text" [(ngModel)]="articleSearch.anydeskid" class="form-control" id="anydeskid" placeholder="anydeskid ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">anydeskpassword :</label>
+                  <input type="text" [(ngModel)]="articleSearch.anydeskpassword" class="form-control" id="anydeskpassword" placeholder="anydeskpassword ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">eyebeam :</label>
+                  <input type="text" [(ngModel)]="articleSearch.eyebeam" class="form-control" id="eyebeam" placeholder="eyebeam ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">eyebeamSIP :</label>
+                  <input type="text" [(ngModel)]="articleSearch.eyebeamSIP" class="form-control" id="eyebeamSIP" placeholder="eyebeamSIP ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">fqdn :</label>
+                  <input type="text" [(ngModel)]="articleSearch.fqdn" class="form-control" id="fqdn" placeholder="fqdn ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">system :</label>
+                  <input type="text" [(ngModel)]="articleSearch.system" class="form-control" id="system" placeholder="system ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">wifissid :</label>
+                  <input type="text" [(ngModel)]="articleSearch.wifissid" class="form-control" id="wifissid" placeholder="wifissid ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="pouce">wifipass :</label>
+                  <input type="text" [(ngModel)]="articleSearch.wifipass" class="form-control" id="wifipass" placeholder="wifipass ...">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div *ngIf="showbtn==1" class="col-md-12 text-center">
+                <img (click)="showDetail('down')" src="assets/images/down.png">
+              </div>
+              <div *ngIf="showbtn==0" class="col-md-12 text-center">
+                <img (click)="showDetail('up')" src="assets/images/up.png">
+              </div>
+              <div class="col-md-12">
+                <button type="submit" (click)="onSubmit()" class="btn btn-success mr-2">Valider</button>
+                <a *ngIf="this.LinkartEdit" routerLink="/article" class="btn btn-light">Cancel</a>
+                <button *ngIf="!this.LinkartEdit" (click)="onCancel()" class="btn btn-light">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

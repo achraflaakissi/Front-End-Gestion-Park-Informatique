@@ -1,0 +1,258 @@
+<div class="row">
+  <div class="col-lg-4 grid-margin stretch-card">
+    <!--weather card-->
+    <div class="card card-weather">
+        <div class="card-body">
+            <div class="weather-date-location">
+                <h3>{{current_day}}</h3>
+                <p class="text-gray">
+                    <span class="weather-date">{{current_date}}</span>
+                    <span class="weather-location">Marrakech, MA</span>
+                </p>
+            </div>
+            <div class="weather-data d-flex">
+                <div class="mr-auto">
+                    <h4 class="display-3">
+                        <span class="symbol"><span *ngIf="weather_desription">{{weather_desription.main.temp}}</span> &deg;</span>C</h4>
+                    <p *ngIf="weather_desription" >
+                      {{weather_desription.weather[0].description}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--weather card ends-->
+  </div>
+  
+  <div class="col-lg-8 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Liste des Interventions :</h4>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Date
+                </th>
+                <th>
+                  Prestation à Effectuer Par
+                </th>
+                <th>
+                  Object
+                </th>
+                <th>
+                  Valider
+                </th>
+                <th>
+                  Date Prestation
+                </th>
+                <th>#</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="Intervenetions">
+              <tr *ngFor="let intervention of Intervenetions._embedded.interventions">
+                <td *ngIf="intervention.type=='tache'" >Tâche à exécuter</td>
+                <td *ngIf="intervention.type=='reclamation'" >Réclamation</td>
+                <td *ngIf="intervention.type=='reclamation'" >{{intervention.date_reclamation | date: 'dd/MM/yyyy'}}</td>
+                <td *ngIf="intervention.type=='tache'" >{{intervention.date_intervention | date: 'dd/MM/yyyy'}} {{intervention.heure_intervention}}</td>
+                <td>{{intervention.equipe}}</td>
+                <td>{{intervention.object}}</td>
+                <td class="text-success" *ngIf="intervention.valider==true" >Valider</td>
+                <td class="text-danger" *ngIf="intervention.valider==false" >En cours</td>
+                <td>{{intervention.date_prestation | date: 'dd/MM/yyyy'}}</td>
+                <td>
+                    <button type="button" (click)="OnDetail(intervention)"  data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm">Detail</button>
+                </td>
+              </tr>
+              </tbody>
+              <tbody *ngIf="!Intervenetions">
+              <tr>
+                <td class="text-center" colspan="8"><img style="width: 250px !important;height: 250px !important;" src="assets/images/loading.gif" ></td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="row" *ngIf="Intervenetions" >
+                <div class="col-md-8">
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                          <li class="page-item" [ngClass]="{'disabled' : Intervenetions.page.number==0}">
+                            <span class="page-link" (click)="changerAffichagePage(Intervenetions.page.number)">Previous</span>
+                          </li>
+                          <li class="page-item" [ngClass]="{'active' : item-1==Intervenetions.page.number}" *ngFor="let item of createRange(Intervenetions.page.totalPages)">
+                              <span class="page-link" *ngIf="item-1==Intervenetions.page.number" >
+                                  {{item}}
+                                  <span class="sr-only">(current)</span>
+                              </span>
+                              <a *ngIf="item-1!=Intervenetions.page.number"  class="page-link" (click)="changerAffichagePage(item)" >{{item}}</a>
+                            </li>
+                          <li class="page-item" [ngClass]="{'disabled' : Intervenetions.page.number+1==Intervenetions.page.totalPages}">
+                            <a class="page-link" (click)="changerAffichagePage(Intervenetions.page.number+2)">Next</a>
+                          </li>
+                        </ul>
+                      </nav>
+                </div>
+                <div class="col-md-4 text-right" *ngIf="Intervenetions" >
+                  Nombre totale des Lignes : {{Intervenetions.page.totalElements}}
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-3 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Fast Links :</h4>
+        <div class="table-responsive">
+          <ul>
+            <li><a href="https://outlook.office.com">Outlook .</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Etat de stock actuel :</h4>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>
+                  Article
+                </th>
+                <th>
+                  Nombre disponible
+                </th>
+              </tr>
+              </thead>
+              <tbody *ngIf="EtatStock">
+              <tr *ngFor="let etatStock of EtatStock">
+                  <td>{{etatStock[0]}}</td>
+                  <td>{{etatStock[1]}}</td>
+              </tr>
+              </tbody>
+              <tbody *ngIf="!EtatStock">
+              <tr>
+                <td class="text-center" colspan="8"><img style="width: 250px !important;height: 250px !important;" src="assets/images/loading.gif" ></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="col-lg-5 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Etat Materiel Donnée :</h4>
+          <div class="table-responsive">
+            <table class="table table-striped" >
+              <thead>
+              <tr>
+                <th>
+                  Article
+                </th>
+                <th>
+                  Emplacement actuel
+                </th>
+              </tr>
+              </thead>
+              <tbody *ngIf="MaterialDonner">
+              <tr *ngFor="let item of MaterialDonner">
+                <td>{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+              </tr>
+              </tbody>
+              <tbody *ngIf="!Intervenetions">
+              <tr>
+                <td class="text-center" colspan="8"><img style="width: 250px !important;height: 250px !important;" src="assets/images/loading.gif" ></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+              <h4 class="card-title">Liste des articles:</h4>
+            <div *ngIf="InventerArticle"  class="row" style="padding: 10px;">
+              <div *ngFor="let inventerArticle of InventerArticle" class="col-md-2 text-center articles">
+                  <h6>{{inventerArticle[0]}}</h6>
+                  <h6>{{inventerArticle[1]}}</h6>
+              </div>
+            </div>      
+          </div>
+        </div>
+      </div>
+</div>
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3> Valider l'intervention </h3>
+        </div>
+        <div class="modal-body">
+            <table *ngIf="Intervenetion"  class="table table-bordered">
+                <tr>
+                  <th>Le Type : </th>
+                  <td *ngIf="Intervenetion.type=='tache'" >Tâche à exécuter</td>
+                  <td *ngIf="Intervenetion.type=='reclamation'" >Réclamation</td>
+                </tr>
+                <tr>
+                  <th>Date : </th>
+                  <td *ngIf="Intervenetion.type=='reclamation'" >{{Intervenetion.date_reclamation | date: 'dd/MM/yyyy'}}</td>
+                  <td *ngIf="Intervenetion.type=='tache'" >{{Intervenetion.date_intervention | date: 'dd/MM/yyyy'}} {{Intervenetion.heure_intervention}}</td>
+                </tr>
+                <tr>
+                  <th>L'emplacement : </th>
+                  <td *ngIf="Emplacement" >{{Emplacement.nom}}</td>
+                  <td *ngIf="Stock" >{{Stock.nom}}</td>
+                </tr>
+                <tr *ngIf="Personnel">
+                  <th>Personnel : </th>
+                  <td>{{Personnel.fullname}}</td>
+                </tr>
+                <tr>
+                  <th>Object : </th>
+                  <td>{{Intervenetion.object}}</td>
+                </tr>
+                <tr>
+                  <th>Date Prestation : </th>
+                  <td><input type="date" [(ngModel)]="ValiderIntervention.date_prestation" class="form-control" id="DatePrestation" placeholder="Date Prestation ..."></td>
+                </tr>
+                <tr>
+                  <th>Heure Prestation : </th>
+                  <td><input type="time" [(ngModel)]="ValiderIntervention.heure_prestation" class="form-control" id="HeurePrestation" placeholder="Heure Prestation ..."></td>
+                </tr>
+                <tr>
+                  <th>Durée de Prestation : </th>
+                  <td><input type="number" [(ngModel)]="ValiderIntervention.duree_intervention" class="form-control" id="duree_intervention" placeholder="Durée de Prestation  ..."></td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" (click)="OnValider()" class="btn btn-primary">Valider</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+
+    </div>
+  </div>

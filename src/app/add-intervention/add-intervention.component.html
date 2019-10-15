@@ -1,0 +1,120 @@
+<div class="row" *ngIf="Test">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+      <blockquote class="blockquote blockquote-success">
+          <footer class="blockquote-footer">
+              Operation effectué avec success !!
+          </footer>
+        </blockquote>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 d-flex align-items-stretch grid-margin">
+    <div class="row flex-grow">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"><span>Ajouter</span> Une Intervention :</h4>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="type">Type :</label>
+                  <select [(ngModel)]="intervention.type" class="form-control" id="type" placeholder="Type ...">
+                    <option value="">--</option>
+                        <option value="reclamation">Réclamation</option>
+                        <option value="tache">Tâche à executer</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="object">object :</label>
+                  <input type="text" [(ngModel)]="intervention.object" class="form-control" id="object" placeholder="object ...">
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="intervention.type=='reclamation'">
+                <div class="form-group">
+                  <label for="date_reclamation">Date Reclamation</label>
+                  <input type="date" [(ngModel)]="date_tache" class="form-control" id="date_reclamation" placeholder="Date Reclamation ...">
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="intervention.type=='tache'">
+                <div class="form-group">
+                  <label for="date_intervention">Date intervention</label>
+                  <input type="date" [(ngModel)]="date_tache" class="form-control" id="date_intervention" placeholder="Date intervention ...">
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="intervention.type=='tache'">
+                <div class="form-group">
+                  <label for="heure_intervention">Heure intervention</label>
+                  <input type="time" [(ngModel)]="intervention.heure_intervention" class="form-control" id="heure_intervention" placeholder="Heure intervention ...">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="Type">Type Emplacement</label>
+                  <select class="form-control" id="Type" placeholder="Type ..." [(ngModel)]="intervention.typeemplacement">
+                    <option value="">--</option>
+                    <option value="emplacement">Emplacement</option>
+                    <option value="stock">Stock</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="intervention.typeemplacement=='stock'" >
+                <div class="form-group">
+                  <label for="Stock">Stock</label>
+                  <select *ngIf="StockList" class="form-control" id="Stock" placeholder="Stock ..." [(ngModel)]="intervention.stock">
+                    <option value="">--</option>
+                    <option  *ngFor="let item of StockList._embedded.stocks"  value="{{item._links.stock.href}}">
+                      {{item.nom}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="intervention.typeemplacement=='emplacement'">
+                <div class="form-group">
+                  <label for="Serial">Emplacement</label>
+                  <select *ngIf="EmplacementList" class="form-control" id="Emplacement" placeholder="Emplacement ..." [(ngModel)]="intervention.emplacement">
+                    <option value="">--</option>
+                    <option  *ngFor="let item of EmplacementList._embedded.emplacements" value="{{item._links.emplacement.href}}" >
+                      {{item.nom}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="intervention.typeemplacement=='emplacement'">
+                <div class="form-group">
+                  <label for="Stock">Personnel</label>
+                  <select *ngIf="PersonnelList" class="form-control" id="Stock" placeholder="Stock ..." [(ngModel)]="intervention.personnel">
+                    <option value="">--</option>
+                    <option  *ngFor="let item of PersonnelList._embedded.personnels"  value="{{item._links.personnel.href}}">
+                      {{item.fullname}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-3" >
+                <div class="form-group">
+                  <label for="Stock">Equipe</label>
+                  <select multiple='true' *ngIf="UsersList" class="form-control" id="User" placeholder="User ..." [(ngModel)]="intervention.equipe">
+                    <option value="">--</option>
+                    <option  *ngFor="let item of UsersList._embedded.users"  value="{{item._links.user.href}}">
+                      {{item.fullname}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-success mr-2">Valider</button>
+                <button class="btn btn-light">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

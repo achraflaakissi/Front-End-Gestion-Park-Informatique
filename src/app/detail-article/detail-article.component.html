@@ -1,0 +1,185 @@
+<div class="row" *ngIf="TestAdd">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <blockquote class="blockquote blockquote-success">
+            <footer class="blockquote-footer">
+                Operation effectué avec success !!
+            </footer>
+          </blockquote>
+    </div>
+  </div>
+<div *ngIf="ArticleDetail" class="row">
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <h2>{{ArticleDetail.nom}}</h2>
+                <p class="card-description">
+                  {{ArticleDetail.designation}}
+                </p>
+                <address>
+                    <p>
+                      <strong>Mark :</strong> {{ArticleDetail.mark}}
+                    </p>
+                    <p>
+                      <strong>Modele :</strong> {{ArticleDetail.modele}}
+                    </p>
+                    <p>
+                      <strong>Numero Serial :</strong> {{ArticleDetail.sn}}
+                    </p>
+                    <p>
+                      <strong>Type :</strong> {{ArticleDetail.type}}
+                    </p>
+                    <p>
+                      <strong>Unite :</strong> {{ArticleDetail.Unite}}
+                    </p>
+                    <p>
+                      <strong>Date Mise Service :</strong> {{ArticleDetail.date_mise_service}}
+                    </p>
+
+                </address>
+                <table class="table table-striped" *ngIf="EmplacementActuel" >
+                  <tr><th>L'Emplacement Actuel :</th><td>{{ EmplacementActuel.nom }}</td></tr>
+                </table>
+              </div>
+              <div class="col-md-9">
+
+                <table class="table table-striped">
+                    <tr>
+                      <th>ip</th><td>{{ArticleDetail.ip}}</td>
+                      <th>cpu</th><td>{{ArticleDetail.cpu}}</td>
+                      <th>ram</th><td>{{ArticleDetail.ram}}</td>
+                    </tr>
+                    <tr>
+                      <th>hdd</th><td>{{ArticleDetail.hdd}}</td>
+                      <th>pouce</th><td>{{ArticleDetail.pouce}}</td>
+                      <th>port</th><td>{{ArticleDetail.port}}</td>
+                    </tr>
+                    <tr>
+                      <th>lumens</th><td>{{ArticleDetail.lumens}}</td>
+                      <th>length</th><td>{{ArticleDetail.length}}</td>
+                      <th>sessionlogin</th><td>{{ArticleDetail.sessionlogin}}</td>
+                    </tr>
+                    <tr>
+                      <th>sessionpassword</th><td>{{ArticleDetail.sessionpassword}}</td>
+                      <th>antivirus</th><td>{{ArticleDetail.antivirus}}</td>
+                      <th>antiviruslicence</th><td>{{ArticleDetail.antiviruslicence}}</td>
+                    </tr>
+                    <tr>
+                      <th>anydesk</th><td>{{ArticleDetail.anydesk}}</td>
+                      <th>anydeskid</th><td>{{ArticleDetail.anydeskid}}</td>
+                      <th>anydeskpassword</th><td>{{ArticleDetail.anydeskpassword}}</td>
+                    </tr>
+                    <tr>
+                      <th>eyebeam</th><td>{{ArticleDetail.eyebeam}}</td>
+                      <th>eyebeamSIP</th><td>{{ArticleDetail.eyebeamSIP}}</td>
+                      <th>fqdn</th><td>{{ArticleDetail.fqdn}}</td>
+                    </tr>
+                    <tr>
+                      <th>system</th><td>{{ArticleDetail.system}}</td>
+                      <th>wifissid</th><td>{{ArticleDetail.wifissid}}</td>
+                      <th>wifipass</th><td>{{ArticleDetail.wifipass}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="6" class="text-right">
+                        <button type="button" (click)="onMouvement(ArticleDetail._links.article.href)"  class="btn btn-success btn-sm">Affecter un Mouvement</button>
+                        <button type="button" (click)="onEdit(ArticleDetail._links.article.href)"  class="btn btn-dark btn-sm">Modifier</button>
+                      </td>
+                    </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+                  <input type="file" (change)="Onchange($event)" >
+        </div>
+        
+        <div class="col-md-6">
+            <button type="submit" (click)="onSubmitFile(ArticleDetail.id)" class="btn btn-success mr-2">Valider</button>
+        </div>
+      </div>
+    </div>
+</div>
+<br>
+<div *ngIf="ArticleHistoriques" class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h3>Historique de l'Article :</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>
+                Type
+              </th>
+              <th>
+                Date mouvement
+              </th>
+              <th>#</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let historique of ArticleHistoriques._embedded.mouvements">
+                  <td>{{ historique.type }}</td>
+                  <td>{{ historique.date_mouvement  | date: 'dd/MM/yyyy'}}</td>
+                  <td>
+                      <button type="button" (click)="OnDetail(historique)" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm">Detail</button>
+                      <button type="button" (click)="OnDeleteMouvement(historique._links.mouvement.href)" data-toggle="modal" class="btn btn-danger btn-sm">Delete</button>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Detail de Mouvement</h3>
+        </div>
+        <div class="modal-body">
+            <table *ngIf="detailMouvement"  class="table table-bordered">
+                <tr>
+                  <th>Le Type Emplacement : </th>
+                  <td>{{detailMouvement.type}}</td>
+                </tr>
+                <tr>
+                  <th>L'Emplacement : </th>
+                  <td>{{detailMouvement.emplacement}}</td>
+                </tr>
+                <tr>
+                  <th>Date de Mouvement : </th>
+                  <td>{{detailMouvement.date | date: 'dd/MM/yyyy'}}</td>
+                </tr>
+                <tr *ngIf="detailMouvement.perso" >
+                  <th>Affectée à : </th>
+                  <td>{{detailMouvement.perso}}</td>
+                </tr>
+                <tr>
+                  <th>Le Mouvement Effectuer Par :</th>
+                  <td>{{detailMouvement.user}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
